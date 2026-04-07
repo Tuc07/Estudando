@@ -1,0 +1,73 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Bola {
+    private String cor;
+    private double circunferencia;
+    private String material;
+
+    public Bola(String cor, double circunferencia, String material) {
+        this.cor = cor;
+        this.circunferencia = circunferencia;
+        this.material = material;
+    }
+
+    // Método focado apenas na tarefa de trocar
+    public void trocaCor(String novaCor) {
+        this.cor = novaCor;
+    }
+
+    public String mostraCor() {
+        return this.cor;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        // Declaramos a lista ANTES de usar
+        ArrayList<Bola> listaBolas = new ArrayList<>();
+
+        System.out.println("--- Criando a bola ---");
+
+        System.out.print("Digite a cor da bola: ");
+        String cor = scan.nextLine();
+
+        System.out.print("Digite a circunferência da bola: ");
+        double circunferencia = Double.parseDouble(scan.nextLine());
+
+        System.out.print("Digite o material da bola: ");
+        String material = scan.nextLine();
+
+        // Criamos o objeto e guardamos na lista
+        Bola minhaBola = new Bola(cor, circunferencia, material);
+        listaBolas.add(minhaBola);
+
+        String continuar;
+        do {
+            System.out.println("\n--- Modelando a Bola (Cor Atual: " + minhaBola.mostraCor() + ") ---");
+            System.out.println("1. Trocar Cor");
+            System.out.println("2. Mostrar Cor");
+            System.out.print("Escolha uma opção: ");
+            int comando = Integer.parseInt(scan.nextLine());
+
+            if (comando == 1) {
+                System.out.print("Digite a nova cor: ");
+                String nova = scan.nextLine();
+                minhaBola.trocaCor(nova);
+                System.out.println("Cor alterada com sucesso!");
+            } else if (comando == 2) {
+                System.out.println("A cor atual é: " + minhaBola.mostraCor());
+            } else {
+                System.out.println("Opção inválida!");
+            }
+
+            System.out.print("Deseja continuar no menu? (S/N): ");
+            continuar = scan.nextLine();
+
+        } while (continuar.equalsIgnoreCase("S"));
+
+        System.out.println("\n--- Programa encerrado ---");
+        scan.close();
+    }
+}
