@@ -1,0 +1,56 @@
+import java.util.ArrayList; // Importação essencial
+import java.util.Scanner;
+class Funcionario{
+    private String nome;
+    private String cargo;
+    private double salario;
+    
+    public Funcionario(String nome,String cargo, double salario){
+        this.nome = nome;
+        this.cargo = cargo;
+        this.salario = salario;
+    }
+    
+    void exibirInfo(){
+        System.out.println("Nome: "+nome+" - Cargo: "+cargo+" - Salario: R$"+salario);
+    }
+}
+
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        
+        ArrayList<Funcionario> listaFuncionario = new ArrayList<>();
+        
+        String continuar;
+        
+        do{
+            System.out.println("----Cadastro Funcionarios----");
+            
+            System.out.print("Digite o nome: ");
+            String nome = scan.nextLine();
+            
+            System.out.print("Digite o cargo: ");
+            String cargo = scan.nextLine();
+            
+            System.out.print("Digite o Salario: ");
+            double salario = Double.parseDouble(scan.nextLine());
+            
+            listaFuncionario.add(new Funcionario(nome, cargo, salario));
+            
+            System.out.print("Deseja continuar ? (S/N) :");
+            continuar = scan.nextLine();
+            
+        }while(continuar.equalsIgnoreCase("S"));
+        
+        System.out.println("----Tabela (" + listaFuncionario.size()+ ")Funcionarios ----");
+        
+        for (Funcionario f : listaFuncionario){
+            f.exibirInfo();
+        }
+        
+        System.out.println("Sistema encerrado.");
+        scan.close();
+    }
+}
