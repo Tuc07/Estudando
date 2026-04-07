@@ -1,0 +1,81 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+class Quadrado{
+    
+    private double lado;
+    
+    public Quadrado(double lado){
+        
+        this.lado = lado;
+        
+    }
+    
+    public void trocaLado(double novoLado){
+        
+        this.lado = novoLado;
+        
+    }
+    
+    public Double mostrarLado(){
+        
+        return this.lado;
+        
+    }
+    
+    public Double calcArea(){
+        
+        return lado * lado;
+        
+    }
+}
+    
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        
+        ArrayList<Quadrado> listaQuadrado = new ArrayList<>();
+        
+        System.out.println("---Montando o quadrado²---");
+        
+        System.out.print("Digite a lado do Quadrado: ");
+        double lado = Double.parseDouble(scan.nextLine());
+        
+        Quadrado meuQuadrado = new Quadrado(lado);
+        listaQuadrado.add(meuQuadrado);
+        
+        String continuar;
+        
+        do{
+        System.out.println("---Modelando Quadrado---");
+        System.out.println("1. Mudar valor do Lado: ");
+        System.out.println("2. Retornar valor do Lado: ");
+        System.out.println("3. Calcular Área: ");
+        int comando = Integer.parseInt(scan.nextLine());
+        
+            if(comando == 1){
+                
+                System.out.println("Novo valor do lado: ");
+                Double novo = Double.parseDouble(scan.nextLine());
+                meuQuadrado.trocaLado(novo);
+                
+                System.out.println("Troca feita!");
+                
+            } else if(comando == 2){
+                
+                System.out.println("O lado do quadrado: "+ meuQuadrado.mostrarLado());
+                
+            } else if(comando == 3){
+                System.out.println("A área do quadrado: "+ meuQuadrado.calcArea());
+            } else {
+                System.out.println("Opção inválida!");
+            }
+            
+            System.out.print("Deseja continuar (S/N) ?: ");
+            continuar = scan.nextLine();
+            
+        } while (continuar.equalsIgnoreCase("S"));
+        
+        System.out.println("---Programa encerrado---");
+        scan.close();
+    }
+}
