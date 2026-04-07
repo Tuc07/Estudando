@@ -1,0 +1,60 @@
+import java.util.Scanner; // Importação necessária
+
+class Cliente { // Removido 'public' se estiver no mesmo arquivo da Main
+    private String nome;
+    private int idade;
+    private String email;
+
+    public Cliente(String nome, int idade, String email) {
+        this.nome = nome;
+        this.idade = idade;
+        this.email = email;
+    }
+
+    public void exibirInfo() {
+        System.out.println("Nome: " + nome + " - Idade: " + idade + " - Email: " + email);
+    }
+}
+
+public class Main {
+    // Método auxiliar para ler texto (substituindo sua classe Scanner manual)
+    public static String scanTexto(Scanner scan, String mensagem) {
+        System.out.print(mensagem);
+        return scan.nextLine();
+    }
+
+    public static void main(String[] args) {
+        Scanner leitor = new Scanner(System.in);
+        Cliente[] meusClientes = new Cliente[4]; // O nome da classe é Cliente (singular)
+        int totalCadastros = 0;
+        String continuar;
+        do {
+            System.out.println("\n---- Cadastro do " + (totalCadastros + 1) + "º Cliente ----");
+
+            String nome = scanTexto(leitor, "Digite o nome: ");
+            String idadeStr = scanTexto(leitor, "Digite a idade: ");
+            String email = scanTexto(leitor, "Digite o email: ");
+
+            // CORREÇÃO AQUI: Usamos Integer.parseInt
+            int idade = Integer.parseInt(idadeStr);
+
+            meusClientes[totalCadastros] = new Cliente(nome, idade, email);
+            totalCadastros++;
+
+            if (totalCadastros < meusClientes.length) {
+                System.out.println("Deseja Continuar (S/N): ");
+                continuar = leitor.nextLine();
+            } else {
+                System.out.println("Limite atingido!");
+                continuar = "N";
+            }
+        } while (continuar.equalsIgnoreCase("S"));
+
+        System.out.println("\n---- Lista Cadastrados ----");
+        for (int i = 0; i < totalCadastros; i++) {
+            meusClientes[i].exibirInfo();
+        }
+        System.out.println("Sistema encerrado.");
+        leitor.close();
+    }
+}
