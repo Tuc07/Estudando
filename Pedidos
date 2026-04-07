@@ -1,0 +1,50 @@
+import java.util.Scanner;
+
+public class GerenciadorPedidos {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        // Criando o array para armazenar exatamente 5 pedidos
+        Pedido[] listaPedidos = new Pedido[5];
+        int totalCadastrado = 0;
+
+        System.out.println("=== Sistema de Gerenciamento de Pedidos ===");
+
+        for (int i = 0; i < listaPedidos.length; i++) {
+            System.out.println("\nCadastro do Pedido #" + (i + 1));
+            
+            System.out.print("Descrição: ");
+            String desc = scan.nextLine();
+            
+            System.out.print("Quantidade: ");
+            int qtd = Integer.parseInt(scan.nextLine());
+            
+            System.out.print("Preço Unitário: ");
+            double preco = Double.parseDouble(scan.nextLine());
+
+            // Instancia o objeto e guarda na posição 'i' do array
+            listaPedidos[i] = new Pedido(desc, qtd, preco);
+            totalCadastrado++;
+
+            // Opcional: perguntar se quer continuar antes de chegar a 5
+            if (i < 4) {
+                System.out.print("Cadastrar próximo? (S/N): ");
+                String continuar = scan.nextLine();
+                if (continuar.equalsIgnoreCase("N")) {
+                    break;
+                }
+            }
+        }
+
+        // Exibição dos resultados
+        System.out.println("\n--- Resumo de Pedidos ---");
+        double valorGeral = 0;
+        
+        for (int i = 0; i < totalCadastrado; i++) {
+            listaPedidos[i].exibirInfo();
+            valorGeral += listaPedidos[i].calcularTotal();
+        }
+
+        System.out.printf("%nValor total de todos os pedidos: R$%.2f%n", valorGeral);
+        scan.close();
+    }
+}
