@@ -1,0 +1,99 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+
+class Retangulo {
+    private double ladoA;
+    private double ladoB;
+
+    public Retangulo(double ladoA, double ladoB) {
+        this.ladoA = ladoA;
+        this.ladoB = ladoB;
+    }
+
+    public void trocarLados(double novoLadoA, double novoLadoB) {
+        this.ladoA = novoLadoA;
+        this.ladoB = novoLadoB;
+    }
+
+    // Corrigido para mostrar os dois lados
+    public String mostrarLados() {
+        return "Lado A: " + ladoA + ", Lado B: " + ladoB;
+    }
+
+    public double calcArea() {
+        return ladoA * ladoB;
+    }
+
+    public double calcPerimetro() {
+        return (ladoA + ladoB) * 2;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        ArrayList<Retangulo> listaRetangulos = new ArrayList<>();
+        String continuar;
+
+        do {
+            System.out.println("\n--- Calculando o Local ---");
+            System.out.print("Qual é o valor do primeiro lado (m): ");
+            double ladoA = Double.parseDouble(scan.nextLine());
+            System.out.print("Qual é o valor do segundo lado (m): ");
+            double ladoB = Double.parseDouble(scan.nextLine());
+
+            Retangulo meuRetangulo = new Retangulo(ladoA, ladoB);
+            listaRetangulos.add(meuRetangulo);
+
+            System.out.println("\n=== MENU DE OPÇÕES ===");
+            System.out.println("1. Calcular Piso e Rodapé (Cálculo do Local)");
+            System.out.println("2. Mudar valor dos lados");
+            System.out.println("3. Ver valor dos lados");
+            System.out.println("4. Calcular Área");
+            System.out.println("5. Calcular Perímetro");
+            System.out.print("Escolha uma opção: ");
+            int comando = Integer.parseInt(scan.nextLine());
+
+            if (comando == 1) {
+                System.out.print("Qual é a área de um único piso (m²): ");
+                double areaPiso = Double.parseDouble(scan.nextLine());
+
+                double areaTotal = meuRetangulo.calcArea();
+                double perimetroTotal = meuRetangulo.calcPerimetro();
+
+                System.out.println("\n--- RESULTADO ---");
+                System.out.println("Área Total: " + areaTotal + " m²");
+                System.out.println("Perímetro Total: " + perimetroTotal + " m");
+                System.out.println("Quantidade de pisos necessários: " + (areaTotal / areaPiso));
+                System.out.println("Quantidade de rodapé necessário: " + perimetroTotal + " m linear.");
+
+            } else if (comando == 2) {
+                System.out.print("Novo valor do Lado A: ");
+                double nA = Double.parseDouble(scan.nextLine());
+                System.out.print("Novo valor do Lado B: ");
+                double nB = Double.parseDouble(scan.nextLine());
+                meuRetangulo.trocarLados(nA, nB);
+                System.out.println("Lados atualizados!");
+
+            } else if (comando == 3) {
+                System.out.println(meuRetangulo.mostrarLados());
+
+            } else if (comando == 4) {
+                System.out.println("Área: " + meuRetangulo.calcArea() + " m²");
+
+            } else if (comando == 5) {
+                System.out.println("Perímetro: " + meuRetangulo.calcPerimetro() + " m");
+
+            } else {
+                System.out.println("Opção inválida!");
+            }
+
+            System.out.print("\nDeseja realizar outro cálculo (S/N)? ");
+            continuar = scan.nextLine();
+
+        } while (continuar.equalsIgnoreCase("S"));
+
+        System.out.println("Programa encerrado!");
+        scan.close();
+    }
+}
