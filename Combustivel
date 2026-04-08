@@ -1,0 +1,121 @@
+import java.util.Scanner;
+
+class BombaCombustivel {
+    private String tipoCombustivel;
+    private double valorLitro;
+    private double quantidadeCombustivel;
+
+    // Construtor
+    public BombaCombustivel(String tipoCombustivel, double valorLitro, double quantidadeCombustivel) {
+        this.tipoCombustivel = tipoCombustivel;
+        this.valorLitro = valorLitro;
+        this.quantidadeCombustivel = quantidadeCombustivel;
+    }
+
+    // Método: Abastecer por Valor (R$)
+    public void abastecerPorValor(double valorFinanceiro) {
+        double litrosAbastecidos = valorFinanceiro / valorLitro;
+
+        if (litrosAbastecidos <= quantidadeCombustivel) {
+            quantidadeCombustivel -= litrosAbastecidos;
+            System.out.printf("Foram colocados %.2f litros de %s.%n", litrosAbastecidos, tipoCombustivel);
+            System.out.printf("Estoque atual da bomba: %.2f litros.%n", quantidadeCombustivel);
+        } else {
+            System.out.println("Erro: Não há combustível suficiente na bomba!");
+        }
+    }
+
+    // Método: Abastecer por Litro
+    public void abastecerPorLitro(double litrosDesejados) {
+        if (litrosDesejados <= quantidadeCombustivel) {
+            double valorAPagar = litrosDesejados * valorLitro;
+            quantidadeCombustivel -= litrosDesejados;
+            System.out.printf("Valor a pagar: R$ %.2f.%n", valorAPagar);
+            System.out.printf("Estoque atual da bomba: %.2f litros.%n", quantidadeCombustivel);
+        } else {
+            System.out.println("Erro: Não há combustível suficiente na bomba!");
+        }
+    }
+
+    // Métodos de Alteração (Setters)
+    public void alterarValor(double novoValor) {
+        this.valorLitro = novoValor;
+        System.out.println("Novo valor do litro: R$ " + valorLitro);
+    }
+
+    public void alterarCombustivel(String novoTipo) {
+        this.tipoCombustivel = novoTipo;
+        System.out.println("Tipo de combustível alterado para: " + tipoCombustivel);
+    }
+
+    public void alterarQuantidadeCombustivel(double novaQuantidade) {
+        this.quantidadeCombustivel = novaQuantidade;
+        System.out.println("Estoque da bomba atualizado para: " + quantidadeCombustivel + " litros.");
+    }
+
+    // Getters para exibição no Main
+    public String getTipoCombustivel() { return tipoCombustivel; }
+    public double getValorLitro() { return valorLitro; }
+    public double getQuantidadeCombustivel() { return quantidadeCombustivel; }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+
+        // Inicializando a bomba com Gasolina, R$ 5.50 o litro e 1000 litros no tanque
+        BombaCombustivel bomba = new BombaCombustivel("Gasolina", 5.50, 1000.0);
+
+        int opcao;
+        do {
+            System.out.println("\n--- POSTO DE COMBUSTÍVEL ---");
+            System.out.println("Combustível: " + bomba.getTipoCombustivel() + " | Preço: R$" + bomba.getValorLitro());
+            System.out.println("Estoque: " + bomba.getQuantidadeCombustivel() + "L");
+            System.out.println("----------------------------");
+            System.out.println("1. Abastecer por Valor (R$)");
+            System.out.println("2. Abastecer por Litro (L)");
+            System.out.println("3. Alterar Preço do Litro");
+            System.out.println("4. Alterar Tipo de Combustível");
+            System.out.println("5. Repor Estoque da Bomba");
+            System.out.println("0. Sair");
+            System.out.print("Escolha uma opção: ");
+            
+            opcao = Integer.parseInt(scan.nextLine());
+
+            switch (opcao) {
+                case 1:
+                    System.out.print("Quanto deseja abastecer em R$? ");
+                    double valor = Double.parseDouble(scan.nextLine());
+                    bomba.abastecerPorValor(valor);
+                    break;
+                case 2:
+                    System.out.print("Quantos litros deseja colocar? ");
+                    double litros = Double.parseDouble(scan.nextLine());
+                    bomba.abastecerPorLitro(litros);
+                    break;
+                case 3:
+                    System.out.print("Digite o novo preço: ");
+                    double preco = Double.parseDouble(scan.nextLine());
+                    bomba.alterarValor(preco);
+                    break;
+                case 4:
+                    System.out.print("Digite o novo tipo de combustível: ");
+                    String tipo = scan.nextLine();
+                    bomba.alterarCombustivel(tipo);
+                    break;
+                case 5:
+                    System.out.print("Digite a nova quantidade total no tanque: ");
+                    double estoque = Double.parseDouble(scan.nextLine());
+                    bomba.alterarQuantidadeCombustivel(estoque);
+                    break;
+                case 0:
+                    System.out.println("Encerrando sistema...");
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        } while (opcao != 0);
+
+        scan.close();
+    }
+}
