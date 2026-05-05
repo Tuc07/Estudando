@@ -1,0 +1,75 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+class Termostato{
+    private double temperaturaAtual ;
+    private double temperaturaDesejada;
+    private boolean estaLigado;
+
+    public Termostato(double temperaturaDesejadaIni){
+        this.temperaturaAtual = 25.0;
+        this.temperaturaDesejada = temperaturaDesejadaIni;
+        this.estaLigado =  true;
+    }
+
+    public void aumentarTemp(){
+        this.temperaturaDesejada++;
+        System.out.println("Temperatura desejada aumentada para :"+this.temperaturaDesejada + "°C");
+    }
+
+    public void diminuirTemp(){
+        this.temperaturaDesejada--;
+        System.out.println("Temperatura desejada diminuida para :"+this.temperaturaDesejada+ "°C");
+    }
+
+    public void exibirStatus(){
+        String status = (estaLigado ? "Ligado" : "Desligado");
+        System.out.println("---STATUS DO AR-CONDICIONADO");
+        System.out.println("Estado: "+ status);
+        System.out.println("Temperatura do quarto: "+this.temperaturaAtual+ "°C");
+        System.out.println("Meta definida: "+this.temperaturaDesejada+ "°C");
+
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner (System.in);
+        int comando;
+        ArrayList<Termostato> listTermostato = new ArrayList<>();
+
+        System.out.print("Defina a temperatura inicial desejada: ");
+        Double temperaturaDesejadaIni = Double.parseDouble(scan.nextLine());
+
+        Termostato meuTermostado = new Termostato(temperaturaDesejadaIni);
+        listTermostato.add(meuTermostado);
+
+        do{
+            System.out.println("# Menu");
+            System.out.println("| 1. Aumentar temperatura.");
+            System.out.println("| 2. Diminuir temperatura.");
+            System.out.println("| 3. Exibir Status.");
+            System.out.println("| 4. Sair.");
+            System.out.print("> Escolha: ");
+            comando = Integer.parseInt(scan.nextLine());
+
+            switch(comando){
+                case 1: meuTermostado.aumentarTemp();
+                break;
+
+                case 2:  meuTermostado.diminuirTemp();
+                break;
+
+                case 3: meuTermostado.exibirStatus();
+                break;
+
+                case 4: System.out.println("Encerrando o sistema...");
+                break;
+
+                default: System.out.println("Opção inválida!");
+            }
+
+        }while(comando != 4);
+        scan.close();
+
+    }
+}
