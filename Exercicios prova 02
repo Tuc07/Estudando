@@ -1,0 +1,108 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class exercicio2 {
+    public static void main(String[]args){
+        Scanner scan = new Scanner(System.in);
+        int comando;
+
+        Servico corte = new Servico("Corte", 35.0);
+        Servico barba = new Servico("Barba", 25.0);
+        ArrayList<Atendimento> meuAtendimento = new ArrayList<>();
+
+        do {
+            System.out.println("---SISTEMA BARBEARIA---");
+            System.out.println("| 1. Novo atendimento. ");
+            System.out.println("| 2. Relatório do dia");
+            System.out.println("| 3. Sair.");
+            System.out.println("> Escolha: ");
+            comando = Integer.parseInt(scan.nextLine());
+
+            switch (comando) {
+                case 1:
+                    System.out.println("Nome do cliente: ");
+                    String nome = scan.nextLine();
+                    Atendimento novoAtendimento = new Atendimento(nome);
+                    int opcao;
+
+                    do {
+                        System.out.println("Adicionar ao cliente " + nome);
+                        System.out.println("1. Corte | 2. Barba | 3.Finalizar atendimento.");
+                        opcao = Integer.parseInt(scan.nextLine());
+                        if (opcao == 1) {
+                            novoAtendimento.adicionarServico(corte);
+                        } else if (opcao == 2) {
+                            novoAtendimento.adicionarServico(barba);
+                        } else if (opcao == 3) {
+                            break;
+                        } else {
+                            System.out.println("Opção inválida!");
+                        }
+                    } while (opcao !=3 );
+
+                    meuAtendimento.add(novoAtendimento);
+                    System.out.println("Atendimento registrado!");
+                    break;
+                case 2:
+                    double faturar = 0;
+                    for (Atendimento a: meuAtendimento) {
+                        a.exibirrelatorio();
+                        faturar += a.calcularTotal();
+                    }
+                    System.out.println("--------------");
+                    System.out.println("FATURAMENTO TOTAL: R$ "+ faturar);
+                break;
+
+                case 3:
+                    System.out.println("Encerando o sistema...");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        }while (comando != 3);
+
+        scan.close();
+    }
+}
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+import java.util.ArrayList;
+
+public class Atendimento {
+        String nomeCliente;
+        ArrayList<Servico> servicosR = new ArrayList<>();
+
+        public Atendimento(String nomeCliente){
+            this.nomeCliente = nomeCliente;
+        }
+
+        public void adicionarServico(Servico s){
+            servicosR.add(s);
+        }
+
+        public double calcularTotal(){
+            double total = 0;
+            for(Servico s: servicosR){
+                total +=s.preco;
+            }
+            return total;
+        }
+
+        public void exibirrelatorio(){
+            System.out.println("Nome do cliente: "+nomeCliente);
+            for (Servico s: servicosR){
+                System.out.println("- "+s.nome+": R$"+s.preco);
+            }
+            System.out.println("Faturamento Total: "+calcularTotal());
+        }
+}
+\\\\\\\\\\\\\\\\\\\\\\\
+public class Servico {
+        String nome;
+        double preco;
+
+        public Servico(String nome , double preco){
+            this.nome = nome;
+            this.preco = preco;
+        }
+}
